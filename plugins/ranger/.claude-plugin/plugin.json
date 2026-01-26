@@ -1,0 +1,12 @@
+{
+    "name": "ranger",
+    "description": "E2E testing and feature development tools for Claude Code",
+    "version": "0.0.1",
+    "author": {
+        "name": "Ranger Testing",
+        "email": "support@ranger.net"
+    },
+    "homepage": "https://ranger.net",
+    "repository": "https://github.com/ranger-testing/ranger-cli",
+    "keywords": ["testing", "e2e", "qa", "automation", "feature-tracking"]
+}

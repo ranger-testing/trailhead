@@ -1,0 +1,96 @@
+{
+    "hooks": {
+        "SessionStart": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=session-start"
+                    }
+                ]
+            }
+        ],
+        "SubagentStart": [
+            {
+                "matcher": "Plan",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=plan-start"
+                    }
+                ]
+            }
+        ],
+        "UserPromptSubmit": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=plan-reminder"
+                    }
+                ]
+            }
+        ],
+        "PreCompact": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=pre-compact"
+                    }
+                ]
+            }
+        ],
+        "PostToolUse": [
+            {
+                "matcher": "Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=post-edit"
+                    }
+                ]
+            },
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=plan-reminder"
+                    }
+                ]
+            }
+        ],
+        "SubagentStop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=plan-reminder"
+                    }
+                ]
+            }
+        ],
+        "PermissionRequest": [
+            {
+                "matcher": "ExitPlanMode",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=exit-plan-mode",
+                        "timeout": 345600
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=stop"
+                    }
+                ]
+            }
+        ]
+    }
+}

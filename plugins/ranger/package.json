@@ -1,0 +1,25 @@
+{
+  "name": "@ranger-testing/ranger-plugin",
+  "version": "0.0.1",
+  "description": "Ranger plugin for Claude Code - E2E testing and feature development tools",
+  "type": "module",
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "ranger",
+    "testing",
+    "e2e",
+    "qa",
+    "automation"
+  ],
+  "author": {
+    "name": "Ranger Testing",
+    "email": "support@ranger.dev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ranger-testing/ranger-cli"
+  },
+  "homepage": "https://ranger.dev"
+}
