@@ -2,24 +2,51 @@
 
 E2E testing and feature development tools for Claude Code.
 
-## Required Setup
+## Getting Started
 
-**Step 1:** Install the Ranger CLI
+### Step 1: Install Ranger
+
 ```bash
 npm install -g @ranger-testing/ranger-cli
 ```
 
-**Step 2:** Get your token from [dashboard.ranger.net/cli](https://dashboard.ranger.net/cli)
+### Step 2: Get Your Token
 
-**Step 3:** Initialize Ranger in your project
+Go to [dashboard.ranger.net/cli](https://dashboard.ranger.net/cli) to get your API token.
+
+### Step 3: Initialize Your Project
+
 ```bash
 ranger start <your-token>
 ```
 
-**Step 4:** (Optional) Add a browser environment for UI testing
-```bash
-ranger add env local
-```
+This will guide you through setup. If you skipped any steps, run them manually:
+
+- Add a browser environment for verification:
+  ```bash
+  ranger add env local
+  ```
+- Install Claude Code skills:
+  ```bash
+  ranger skillup
+  ```
+- Install the Claude Code plugin:
+  ```bash
+  claude plugin marketplace add ranger-testing/trailhead
+  claude plugin install ranger@trailhead --scope user
+  ```
+
+## Using Ranger with Claude
+
+Once set up, here's the typical workflow:
+
+1. Start a Claude Code session in your project
+2. Run `/ranger:enable` to activate Ranger
+3. Enter plan mode with `/plan` to begin planning your feature
+4. Accept the plan - Ranger tracks your feature automatically
+5. Watch Ranger verify your feature in the browser
+
+Ranger stays enabled on your branch across sessions. Use `/ranger:disable` to turn it off.
 
 ## Plugin Commands
 

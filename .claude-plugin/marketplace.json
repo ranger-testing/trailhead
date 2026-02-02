@@ -2,13 +2,16 @@
   "name": "trailhead",
   "owner": {
     "name": "Ranger Testing",
-    "url": "https://ranger.net"
+    "email": "support@ranger.net"
+  },
+  "metadata": {
+    "description": "E2E testing and feature development tools for Claude Code"
   },
   "plugins": [
     {
       "name": "ranger",
       "source": "./plugins/ranger",
-      "description": "E2E testing and feature development tools for Claude Code"
+      "description": "E2E testing and feature development tools"
     }
   ]
 }

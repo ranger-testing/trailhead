@@ -1,8 +1,12 @@
 {
   "name": "@ranger-testing/ranger-plugin",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Ranger plugin for Claude Code - E2E testing and feature development tools",
   "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "prepublish": "npm run build"
+  },
   "keywords": [
     "claude-code",
     "plugin",
