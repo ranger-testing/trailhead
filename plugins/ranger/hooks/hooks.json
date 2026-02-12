@@ -36,6 +36,14 @@
                 "hooks": [
                     {
                         "type": "command",
+                        "command": "npx @ranger-testing/ranger-cli hook --name=auto-prompt"
+                    }
+                ]
+            },
+            {
+                "hooks": [
+                    {
+                        "type": "command",
                         "command": "npx @ranger-testing/ranger-cli hook --name=plan-reminder"
                     }
                 ]
