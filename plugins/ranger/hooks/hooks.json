@@ -108,15 +108,6 @@
                         "command": "npx @ranger-testing/ranger-cli hook --name=stop"
                     }
                 ]
-            },
-            {
-                "hooks": [
-                    {
-                        "type": "prompt",
-                        "prompt": "Review the conversation transcript and determine if a Ranger feature review was created or verified during this session. If so, the agent must include a final message with a link to the feature review on the Ranger dashboard (https://dashboard.ranger.net/features/{feature_id}) and direct the user to visit it. Context: $ARGUMENTS",
-                        "timeout": 30
-                    }
-                ]
             }
         ]
     }
