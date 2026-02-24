@@ -1,0 +1,45 @@
+{
+    "name": "@ranger-testing/opencode-plugin",
+    "version": "2.1.0",
+    "description": "Ranger plugin for OpenCode - feature tracking hooks for AI coding sessions",
+    "type": "module",
+    "main": "./build/index.js",
+    "types": "./build/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./build/index.js",
+            "types": "./build/index.d.ts"
+        }
+    },
+    "files": [
+        "build"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npm run build"
+    },
+    "dependencies": {
+        "@ranger-testing/ranger-cli": "^2.0.6"
+    },
+    "peerDependencies": {
+        "@opencode-ai/plugin": ">=1.0.0"
+    },
+    "devDependencies": {
+        "@opencode-ai/plugin": "^1.1.50",
+        "@types/node": "^22.0.0",
+        "typescript": "^5.0.0"
+    },
+    "keywords": [
+        "opencode",
+        "opencode-plugin",
+        "ranger",
+        "testing",
+        "qa"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ranger-testing/trailhead",
+        "directory": "opencode-plugin"
+    }
+}

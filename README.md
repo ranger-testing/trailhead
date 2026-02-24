@@ -1,27 +1,44 @@
 # Trailhead
 
-Claude Code plugin marketplace for Ranger testing tools.
+Ranger integrations for AI coding agents. This repo ships the Claude Code plugin and the OpenCode plugin.
 
-## Installation
+## Claude Code
 
-From terminal:
+1. Install the CLI.
 
 ```bash
-claude plugin marketplace add ranger-testing/trailhead
-claude plugin install ranger@trailhead
+npm install -g @ranger-testing/ranger-cli
 ```
 
-From inside Claude Code:
+2. Run setup from your project root.
 
+```bash
+ranger setup
 ```
-/plugin marketplace add ranger-testing/trailhead
-/plugin install ranger@trailhead
+
+3. Restart Claude Code, then run `/ranger:enable`.
+
+## OpenCode
+
+1. Install the CLI.
+
+```bash
+npm install -g @ranger-testing/ranger-cli
 ```
 
-## Available Plugins
+2. Run setup from your project root.
 
-### ranger
+```bash
+ranger setup --opencode
+```
 
-Agentic UI development tools for Claude Code.
+3. Confirm `opencode.json` includes the plugin.
 
-See [plugins/ranger/README.md](plugins/ranger/README.md) for setup instructions.
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["@ranger-testing/opencode-plugin"]
+}
+```
+
+4. Restart OpenCode, then run the `ranger_enable` tool.
