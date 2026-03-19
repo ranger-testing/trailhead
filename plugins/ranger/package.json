@@ -1,10 +1,10 @@
 {
   "name": "@ranger-testing/ranger-plugin",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Ranger plugin for Claude Code - E2E testing and feature development tools",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "node ../../scripts/build.js",
     "prepublish": "npm run build"
   },
   "keywords": [
