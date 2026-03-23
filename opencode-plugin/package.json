@@ -1,6 +1,6 @@
 {
     "name": "@ranger-testing/opencode-plugin",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "description": "Ranger plugin for OpenCode - feature tracking hooks for AI coding sessions",
     "type": "module",
     "main": "./build/index.js",
