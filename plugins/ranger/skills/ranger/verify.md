@@ -5,7 +5,7 @@ After implementing code for a scenario, verify it works in the browser. This cre
 ## Basic Command
 
 ```bash
-ranger go --scenario <N> --notes "<what to verify>"
+ranger-cli go --scenario <N> --notes "<what to verify>"
 ```
 
 The URL is derived from your active profile's `baseUrl` setting.
@@ -15,8 +15,8 @@ The URL is derived from your active profile's `baseUrl` setting.
 `go` requires an active feature review. If you don't have one:
 
 ```bash
-ranger list                # Find feature reviews to resume
-ranger resume <id>         # Resume a specific feature review
+ranger-cli list                # Find feature reviews to resume
+ranger-cli resume <id>         # Resume a specific feature review
 ```
 
 ## The Verification Flow
@@ -67,7 +67,7 @@ If your scenario has a detailed description, you can omit `--notes`:
 
 ```bash
 # Scenario 1: "User can log in with valid credentials - sees loading state - redirects to dashboard"
-ranger go --scenario 1
+ranger-cli go --scenario 1
 ```
 
 The scenario description becomes the task automatically.
@@ -92,8 +92,8 @@ Run multiple non-conflicting verifications in parallel using background executio
 Use Bash with `run_in_background: true`:
 
 ```
-[Bash: ranger go --scenario 1, run_in_background: true] → task_abc
-[Bash: ranger go --scenario 2, run_in_background: true] → task_def
+[Bash: ranger-cli go --scenario 1, run_in_background: true] → task_abc
+[Bash: ranger-cli go --scenario 2, run_in_background: true] → task_def
 ```
 
 Poll with TaskOutput, report results as they complete.
@@ -118,44 +118,31 @@ File watchers (Next.js, Vite) will restart the dev server and break active brows
 ### Basic Verification
 
 ```bash
-ranger go \
-  --scenario 1 \
-  --notes "Log in with test@example.com / password123, verify redirect to dashboard"
+ranger-cli go --scenario 1 --notes "Log in with test@example.com / password123, verify redirect to dashboard"
 ```
 
 ### Verify Specific Scenario
 
 ```bash
 # Skip the selection prompt, verify scenario 2 directly
-ranger go \
-  --notes "Complete signup flow with new email" \
-  --scenario 2
+ranger-cli go --notes "Complete signup flow with new email" --scenario 2
 ```
 
 ### Verify with Specific Profile
 
 ```bash
 # Use staging profile instead of active profile
-ranger go \
-  --profile staging \
-  --scenario 1 \
-  --notes "Verify login works in staging"
+ranger-cli go --profile staging --scenario 1 --notes "Verify login works in staging"
 ```
 
 ### Start on a Specific Page
 
 ```bash
 # Start verification at /settings instead of base URL
-ranger go \
-  --start-path /settings \
-  --scenario 1 \
-  --notes "Verify user can update their profile"
+ranger-cli go --start-path /settings --scenario 1 --notes "Verify user can update their profile"
 
 # Start at /admin/users
-ranger go \
-  --start-path /admin/users \
-  --scenario 2 \
-  --notes "Verify admin can see user list"
+ranger-cli go --start-path /admin/users --scenario 2 --notes "Verify admin can see user list"
 ```
 
 ## After Verification
@@ -163,7 +150,7 @@ ranger go \
 Check progress:
 
 ```bash
-ranger show
+ranger-cli show
 ```
 
 If all non-closed scenarios are verified, the feature review auto-completes:
@@ -184,7 +171,7 @@ Each verification creates:
 
 Access evidence via the report or dashboard.
 
-Always end the conversational turn by sharing the dashboard link whenever you run `ranger go`:
+Always end the conversational turn by sharing the dashboard link whenever you run `ranger-cli go ...`:
 
 > Here is the link to the Feature Review in Ranger. Leave comments in the dashboard and then resume the feature review in your agent.
 > https://dashboard.ranger.net/features/{feature_id}
@@ -192,10 +179,10 @@ Always end the conversational turn by sharing the dashboard link whenever you ru
 ## Troubleshooting
 
 ### "No active feature review"
-Run `ranger list` to find feature reviews, then `ranger resume <id>` to resume one.
+Run `ranger-cli list` to find feature reviews, then `ranger-cli resume <id>` to resume one.
 
 ### "No active profile"
-Run `ranger profile use <profile-name>` to set a profile with browser access.
+Run `ranger-cli profile use <profile-name>` to set a profile with browser access.
 
 ### Verification times out
 The agent has 59 minutes max. For very long flows, break into smaller scenarios.

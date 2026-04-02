@@ -7,12 +7,12 @@ v2+ scenarios inherit comments from their parent version. Run `get-review` to se
 ## When This Applies
 
 - Scenarios show as v2/v3 with `[has reviewer feedback]` tag
-- `ranger resume` prints a warning about unaddressed comments
+- `ranger-cli resume <id>` prints a warning about unaddressed comments
 
 ## Step 1: Read the Feedback
 
 ```bash
-ranger get-review
+ranger-cli get-review
 ```
 
 This shows ALL reviewer comments across all scenarios, including:
@@ -59,7 +59,7 @@ For each unaddressed comment:
 ## Step 3: Re-verify
 
 ```bash
-ranger go --scenario <N>
+ranger-cli go --scenario <N>
 ```
 
 The verification agent **automatically receives the reviewer comments** in its prompt. It will specifically check that each reviewer concern was addressed in the current implementation.

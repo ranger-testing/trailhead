@@ -5,9 +5,9 @@ description: "Ranger’s browser verification tooling that supplements a coding 
 
 # Ranger Skill
 
-If the `ranger` command is not available, install it with `npm install -g @ranger-testing/ranger-cli`.
+Run Ranger commands using `ranger-cli <args>`.
 
-**IMPORTANT: At the start of any session, run `ranger update` to ensure you have the latest CLI and skills.**
+**IMPORTANT: At the start of any session, run `ranger-cli update` to ensure you have the latest CLI and skills.**
 
 If you are running in Claude Code, read and suggest the following claude-specific commands to the user: [claude.md](./claude.md).
 
@@ -39,19 +39,19 @@ Use this workflow when:
 
 ```bash
 # List feature reviews to find one to resume
-ranger list
+ranger-cli list
 
 # Resume a specific feature review by ID
-ranger resume <id>
+ranger-cli resume <id>
 
 # Verify a scenario (starts at base URL)
-ranger go --scenario <N> --notes "<description of what to verify>"
+ranger-cli go --scenario <N> --notes "<description of what to verify>"
 
 # Verify starting on a specific page
-ranger go --scenario <N> --start-path /dashboard --notes "<description>"
+ranger-cli go --scenario <N> --start-path /dashboard --notes "<description>"
 
 # Add a scenario if scope expanded (be detailed!)
-ranger add-scenario "User navigates to /settings, clicks 'Edit Profile', updates display name, clicks Save, sees success toast, refreshes page, and confirms the new name persists"
+ranger-cli add-scenario "User navigates to /settings, clicks 'Edit Profile', updates display name, clicks Save, sees success toast, refreshes page, and confirms the new name persists"
 ```
 
 ---
@@ -63,16 +63,13 @@ ranger add-scenario "User navigates to /settings, clicks 'Edit Profile', updates
 Use this workflow when:
 - Starting new feature review development
 - Planning UI changes
-- `ranger show` found no match
-- The feature review you are developing is not found in `ranger list`
+- `ranger-cli show` found no match
+- The feature review you are developing is not found in `ranger-cli list`
 
 ### Quick Start
 
 ```bash
-ranger create "<name>" \
-  --description "<description>" \
-  -c "<E2E scenario 1>" \
-  -c "<E2E scenario 2>"
+ranger-cli create "<name>" --description "<description>" -c "<E2E scenario 1>" -c "<E2E scenario 2>"
 ```
 
 ### Critical: Scenarios Are E2E Tests
@@ -99,7 +96,7 @@ Use this workflow when:
 
 ```bash
 # Verify a scenario
-ranger go --scenario <N> --notes "<description of what to verify>"
+ranger-cli go --scenario <N> --notes "<description of what to verify>"
 ```
 
 The verification agent will:
@@ -117,18 +114,18 @@ The verification agent will:
 **MANDATORY: Read [feedback.md](./feedback.md) when scenarios have reviewer comments.**
 
 Use this workflow when:
-- `ranger show` displays scenarios with comment badges
+- `ranger-cli show` displays scenarios with comment badges
 - Scenarios show as v2/v3 (revised after reviewer feedback)
-- `ranger resume` warns about unaddressed comments
+- `ranger-cli resume <id>` warns about unaddressed comments
 
 ### Quick Start
 
 ```bash
 # See all reviewer comments across scenarios
-ranger get-review
+ranger-cli get-review
 
 # After fixing code, re-verify the scenario
-ranger go --scenario <N>
+ranger-cli go --scenario <N>
 ```
 
 The verification agent automatically receives reviewer comments, so it will check that each concern was addressed.
@@ -153,12 +150,12 @@ When completing your work or ending the session, your final message to the user 
 # Development Cycle
 
 ```
-┌───────────────────────────────────────┐
-│  1. RESUME OR CREATE FEATURE REVIEW   │  ◀── MUST READ start.md, create.md
-│     • ranger list                     │
-│     • ranger resume <id>              │
-│     • OR ranger create                │
-└───────────────────┬───────────────────┘
+┌─────────────────────────────────────────┐
+│  1. RESUME OR CREATE FEATURE REVIEW     │  ◀── MUST READ start.md, create.md
+│     • ranger-cli list                   │
+│     • ranger-cli resume <id>            │
+│     • OR ranger-cli create ...          │
+└───────────────────┬─────────────────────┘
                     │
                     ▼
         ┌───────────────────────┐
@@ -208,24 +205,24 @@ When completing your work or ending the session, your final message to the user 
 
 | Command | Purpose |
 |---------|---------|
-| `ranger list` | List feature reviews (check before creating a new one) |
-| `ranger resume <id>` | Resume a specific feature review |
-| `ranger show` | Show current feature review status |
-| `ranger create` | Create new feature review with scenarios |
-| `ranger add-scenario` | Add a scenario to active feature review |
-| `ranger edit-scenario` | Edit a scenario description on the active feature review |
-| `ranger get-review` | See reviewer comments on scenarios |
-| `ranger report` | Generate PR description markdown with screenshots |
-| `ranger go` | Verify scenario in browser |
+| `ranger-cli list` | List feature reviews (check before creating a new one) |
+| `ranger-cli resume <id>` | Resume a specific feature review |
+| `ranger-cli show` | Show current feature review status |
+| `ranger-cli create ...` | Create new feature review with scenarios |
+| `ranger-cli add-scenario ...` | Add a scenario to active feature review |
+| `ranger-cli edit-scenario ...` | Edit a scenario description on the active feature review |
+| `ranger-cli get-review` | See reviewer comments on scenarios |
+| `ranger-cli report` | Generate PR description markdown with screenshots |
+| `ranger-cli go ...` | Verify scenario in browser |
 
 # Key Principles
 
 1. **Read the docs first** - start.md before resuming, create.md before creating, verify.md before verifying
-2. **Always list first** - Run `ranger list` at session start before creating new feature reviews
+2. **Always list first** - Run `ranger-cli list` at session start before creating new feature reviews
 3. **Scenarios are E2E tests** - Not TODO lists, not backend tasks. BE DESCRIPTIVE and unambiguous when detailing the flow to cover.
 4. **Verify after implementing** - Don't skip browser verification
 5. **Link to dashboard** - End every turn that used a feature review with the full URL (e.g. https://dashboard.ranger.net/features/{feature_id})
-6. **Summarize results** - Offer to create a PR description with screenshots demonstrating the feature using `ranger report`.
+6. **Summarize results** - Offer to create a PR description with screenshots demonstrating the feature using `ranger-cli report`.
 
 ---
 
@@ -235,16 +232,16 @@ When completing your work or ending the session, your final message to the user 
 
 If you encounter authentication issues:
 
-1. **Check your profiles**: Run `ranger profile ls` to see all configured profiles and their details
-2. **Switch profiles**: Use `ranger profile use <profile-name>` to switch to a different profile
-3. **Refresh auth**: Instruct the user to run `ranger profile update <profile-name>` to re-capture authentication for a profile (user will need to help with that)
+1. **Check your profiles**: Run `ranger-cli profile ls` to see all configured profiles and their details
+2. **Switch profiles**: Use `ranger-cli profile use <profile-name>` to switch to a different profile
+3. **Refresh auth**: Instruct the user to run `ranger-cli profile update <profile-name>` to re-capture authentication for a profile (user will need to help with that)
 
 
 ### Authentication Issues to Ranger
 
-If you encounter issues where the `ranger` CLI is not authenticated for running any commands, instruct the user to run `ranger setup` (if there is no `.ranger` directory) or `ranger login` to refresh their API token.
+If you encounter issues where the Ranger CLI is not authenticated for running any commands, instruct the user to run `ranger-cli setup` (if there is no `.ranger` directory) or `ranger-cli login` to refresh their API token.
 
-Additionally, if no `ranger` commands work after the user runs `ranger setup` or `ranger login`, the issue may be permissions to make network calls. Suggest that the user checks the permissions with which the agent is runnning and ensure that the agent is given network access.
+Additionally, if no Ranger commands work after the user runs `ranger-cli setup` or `ranger-cli login`, the issue may be permissions to make network calls. Suggest that the user checks the permissions with which the agent is running and ensure that the agent is given network access.
 
 
 ### Full Documentation

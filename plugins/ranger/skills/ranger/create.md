@@ -5,10 +5,7 @@ Create a feature review when starting new work that doesn't have an existing fea
 ## Basic Command
 
 ```bash
-ranger create "<feature review name>" \
-  --description "<description>" \
-  -c "<scenario 1>" \
-  -c "<scenario 2>"
+ranger-cli create "<feature review name>" --description "<description>" -c "<scenario 1>" -c "<scenario 2>"
 ```
 
 Use multiple `-c` flags for multiple scenarios. Each scenario can contain commas.
@@ -21,7 +18,7 @@ When you create a feature review, the CLI automatically captures:
 - **Created timestamp**
 - **Your organization** - From API token
 
-This enables `ranger list` to filter feature reviews by git context later.
+This enables `ranger-cli list` to filter feature reviews by git context later.
 
 ## Writing Good Scenarios
 
@@ -116,17 +113,12 @@ Good: "User can create a new project, invite a team member, and see them in the 
 
 **Simple feature (1 scenario):**
 ```bash
-ranger create "Add Export Button" \
-  --description "Add export functionality to the reports page" \
-  -c "Navigate to Reports page, click the new Export button, select CSV format, and verify the file downloads"
+ranger-cli create "Add Export Button" --description "Add export functionality to the reports page" -c "Navigate to Reports page, click the new Export button, select CSV format, and verify the file downloads"
 ```
 
 **Larger feature (multiple scenarios):**
 ```bash
-ranger create "User Authentication" \
-  --description "Login and signup flows for the web app" \
-  -c "Go to login page and sign in with valid credentials, verify redirect to dashboard" \
-  -c "Go to signup page and create new account, verify welcome email and successful login"
+ranger-cli create "User Authentication" --description "Login and signup flows for the web app" -c "Go to login page and sign in with valid credentials, verify redirect to dashboard" -c "Go to signup page and create new account, verify welcome email and successful login"
 ```
 
 ## Output
@@ -155,6 +147,6 @@ Creating feature review...
 The new feature review is automatically set as the active feature review. You can now:
 
 1. Start implementing the first scenario
-2. View status with `ranger show`
+2. View status with `ranger-cli show`
 
 Always end the conversational turn by sharing the dashboard link.

@@ -7,13 +7,13 @@ At the START of any coding session that touches the frontend or UI, check if the
 First, check what feature reviews exist:
 
 ```bash
-ranger list
+ranger-cli list
 ```
 
 Or filter to the current git branch:
 
 ```bash
-ranger list --current-branch
+ranger-cli list --current-branch
 ```
 
 This shows feature review names, IDs, status, and branch info.
@@ -23,7 +23,7 @@ This shows feature review names, IDs, status, and branch info.
 If you find a pertinent feature review to resume:
 
 ```bash
-ranger resume <id>
+ranger-cli resume <id>
 ```
 
 This command:
@@ -41,7 +41,7 @@ End the conversational turn by sharing the dashboard link whenever you resume a 
 After resuming, view the full status:
 
 ```bash
-ranger show
+ranger-cli show
 ```
 
 This displays:
@@ -55,7 +55,7 @@ This displays:
 If any scenarios show comment badges (e.g., `[2 comments]`) or are at v2+, reviewer feedback needs to be addressed:
 
 ```bash
-ranger get-review
+ranger-cli get-review
 ```
 
 This shows the actual comment content, who wrote it, and the previous version description. **Read [feedback.md](./feedback.md) for the full feedback workflow.**
@@ -65,7 +65,7 @@ This shows the actual comment content, who wrote it, and the previous version de
 If you need to add new work to an existing feature review:
 
 ```bash
-ranger add-scenario "User navigates to /settings, clicks 'Edit Profile', updates their display name, clicks Save, sees success toast, refreshes the page, and confirms the new name persists"
+ranger-cli add-scenario "User navigates to /settings, clicks 'Edit Profile', updates their display name, clicks Save, sees success toast, refreshes the page, and confirms the new name persists"
 ```
 
 This adds a new pending scenario to the active feature review. Use this when:
@@ -79,12 +79,12 @@ Scenarios should be **detailed, multi-step E2E flows** that can be verified in a
 
 **Bad (too vague):**
 ```bash
-ranger add-scenario "Profile editing works"
+ranger-cli add-scenario "Profile editing works"
 ```
 
 **Good (detailed flow):**
 ```bash
-ranger add-scenario "User goes to /settings, clicks 'Edit Profile' button, changes display name to 'Test User', clicks Save, sees 'Profile updated' success message, refreshes the page, and verifies the name still shows 'Test User'"
+ranger-cli add-scenario "User goes to /settings, clicks 'Edit Profile' button, changes display name to 'Test User', clicks Save, sees 'Profile updated' success message, refreshes the page, and verifies the name still shows 'Test User'"
 ```
 
 **Note:** You cannot add scenarios while a review is in progress.
@@ -95,12 +95,12 @@ ranger add-scenario "User goes to /settings, clicks 'Edit Profile' button, chang
 Start Session
      │
      ▼
-ranger list
+ranger-cli list
      │
-     ├── Found pertinent feature review? ──▶ ranger resume <id>
+     ├── Found pertinent feature review? ──▶ ranger-cli resume <id>
      │                                         │
      │                                         ▼
-     │                                ranger show
+     │                                ranger-cli show
      │                                         │
      │                                         ▼
      │                                Scenarios have comments?
@@ -118,7 +118,7 @@ ranger list
 
 ```bash
 # Start of session - list feature reviews
-$ ranger list
+$ ranger-cli list
 
 Showing 3 of 3:
 
@@ -128,7 +128,7 @@ Showing 3 of 3:
    Branch: feature/auth
 
 # Resume the feature review
-$ ranger resume feat_abc123
+$ ranger-cli resume feat_abc123
 
 ✅ Resumed feature review: User Authentication (feat_abc123)
 
