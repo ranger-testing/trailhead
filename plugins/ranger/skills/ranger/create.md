@@ -2,6 +2,25 @@
 
 Create a feature review when starting new work that doesn't have an existing feature review to resume.
 
+## ⚠️ When NOT to use this
+
+**If the user just wants a quick browser check** (e.g. "log in as X and confirm the dashboard renders", "check that the new button appears on /settings"), **do not run `ranger-cli create`**. Run `ranger-cli go` directly:
+
+```bash
+RANGER_TEST_USERNAME='...' RANGER_TEST_PASSWORD='...' \
+  ranger-cli go --base-url <target> --notes '<goal verbatim>'
+```
+
+The CLI creates a feature review automatically when one is needed. Chaining `create` first is wasted ceremony and shows up as noise for the reviewer. See the **One-shot verification** section in the parent `SKILL.md`.
+
+Reach for `ranger-cli create` only when:
+
+1. The work is genuinely multi-scenario (2+ distinct user journeys worth tracking separately)
+2. You need to enumerate the scenarios up front for the reviewer to see before verification runs
+3. The user explicitly asks for a "feature review" rather than just a "browser check"
+
+When in doubt, start with one-shot `go` — you can always add scenarios later with `ranger-cli add-scenario`.
+
 ## Basic Command
 
 ```bash

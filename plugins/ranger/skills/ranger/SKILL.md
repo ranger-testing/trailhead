@@ -7,15 +7,44 @@ description: "Ranger’s browser verification tooling that supplements a coding 
 
 Run Ranger commands using `ranger-cli <args>`.
 
-**IMPORTANT: At the start of any session, run `ranger-cli update` to ensure you have the latest CLI and skills.**
+**IMPORTANT: At the start of any session, check that you have the latest CLI and skills. If you were installed from `@latest`, run `ranger-cli update`. If you are on a prerelease (e.g., `@alpha`, version contains `-alpha.`), do NOT run `ranger-cli update` — it will move you to `@latest` and off the prerelease track. Check with your team lead or re-install with `npm i -g @ranger-testing/ranger-cli@alpha` to stay current on that channel.**
 
 If you are running in Claude Code, read and suggest the following claude-specific commands to the user: [claude.md](./claude.md).
 
 Use Ranger when the work includes any UI or frontend component. Do not suggest Ranger for backend-only or infra-only changes unless the user asks.
 
-This skill covers three workflows for Ranger feature review tracking:
+## One-shot verification (default path when you have creds)
 
-## Supported Workflows
+When the user gives you credentials and a goal in a single message (e.g. "use `alice@example.com` / `hunter2` to log in and check the dashboard renders"), run `go` DIRECTLY with the creds inline. No `create`, no `profile add`, no `resume` first:
+
+```bash
+RANGER_TEST_USERNAME='alice@example.com' RANGER_TEST_PASSWORD='hunter2' \
+  ranger-cli go --base-url <target-url> --notes '<the goal verbatim>'
+```
+
+The CLI:
+- Materializes a profile from `RANGER_TEST_USERNAME` if one doesn't exist
+- Runs the configured login automatically — no human at a browser needed
+- Creates a feature review if one is required but missing
+- Captures trace + screenshots as evidence
+
+This works for any login flow Ranger has set up with the customer (username/password, SSO, OAuth, MFA — any shape we can run deterministically with the access we hold).
+
+Do **not** chain `ranger-cli create` before `go` unless the user explicitly asks for a structured multi-scenario feature review. The one-shot flow is the happy path for ad-hoc "verify this thing" requests.
+
+If credentials live in a `.env` next to the user's repo (look for `RANGER_TEST_USERNAME` / `RANGER_TEST_PASSWORD` / `TARGET_URL`), source that file inline before running `go` instead of typing values (`set -a; source ./.env; set +a`).
+
+### When to fall back
+
+If `go` returns a 422 / login-failed, automated login probably isn't set up for this account yet. Fall back in this order:
+
+1. **Active profile** — try `ranger-cli go` with no env vars. Works if a human already ran `ranger-cli profile add` for this app.
+2. **Interactive setup** — ask the user to run `ranger-cli profile add <name>` (a browser opens, they log in once, you take it from there).
+3. **For automated CI / background-agent setups specifically**: tell the user automated login is set up per-app with the Ranger team — point them at https://docs.ranger.net/main/concepts/profiles#automated-login.
+
+If the user did NOT give you credentials in the first place (just said "log in to my app"), skip the env-var path entirely and go straight to fallback #1 or #2.
+
+## Structured workflows
 
 | Workflow | When to Use | Required Reading |
 |----------|-------------|------------------|
@@ -232,9 +261,10 @@ When completing your work or ending the session, your final message to the user 
 
 If you encounter authentication issues:
 
-1. **Check your profiles**: Run `ranger-cli profile ls` to see all configured profiles and their details
-2. **Switch profiles**: Use `ranger-cli profile use <profile-name>` to switch to a different profile
-3. **Refresh auth**: Instruct the user to run `ranger-cli profile update <profile-name>` to re-capture authentication for a profile (user will need to help with that)
+1. **Log in with provided credentials**: Set `RANGER_TEST_USERNAME` and `RANGER_TEST_PASSWORD` and re-run `ranger-cli go ...`. The CLI uses those credentials to log in and reuses the same profile on subsequent runs.
+2. **Check existing profiles**: Run `ranger-cli profile ls` to see all configured profiles.
+3. **Pin a specific profile**: Use `ranger-cli profile use <profile-name>` (or pass `--profile <name>` / set `RANGER_PROFILE`).
+4. **Refresh auth**: For server-side relogin (headless, no human needed), set `RANGER_TEST_USERNAME` / `RANGER_TEST_PASSWORD` and re-run `ranger-cli go ...`. For SSO/OAuth profiles, run `ranger-cli profile update <account-email>` to re-capture the session (server-side login when configured, headed browser otherwise).
 
 
 ### Authentication Issues to Ranger

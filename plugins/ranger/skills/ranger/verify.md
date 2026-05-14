@@ -1,23 +1,62 @@
 # Verifying Scenarios
 
-After implementing code for a scenario, verify it works in the browser. This creates evidence (screenshots, traces, logs) that the implementation is complete.
+## One-shot: creds + goal in, verification out
 
-## Basic Command
+When the user gives you credentials and a goal (e.g. "use alice@example.com / hunter2 and check the dashboard renders"), run `go` directly with env vars inline — no `create`, no `profile add`, no ceremony:
+
+```bash
+RANGER_TEST_USERNAME='alice@example.com' RANGER_TEST_PASSWORD='hunter2' \
+  ranger-cli go --base-url <target-url> --notes '<the goal verbatim>'
+```
+
+If credentials already live in a nearby `.env`, source it inline before running `go` instead of typing values (`set -a; source ./.env; set +a`).
+
+The CLI:
+
+- Materializes a profile from `RANGER_TEST_USERNAME` if one doesn't exist
+- Runs the configured login if no session is cached
+- Creates a feature review automatically when one is needed
+- Captures a trace + screenshots you can link to
+
+This works for any login flow Ranger has set up with the customer — username/password, SSO, OAuth, MFA, passkeys. Don't worry about the auth shape; if the user gave you creds, try this path first.
+
+Do **not** run `ranger-cli create` first unless the user explicitly asks for a structured feature review with multiple scenarios.
+
+### Fallback when the one-shot path fails
+
+If `go` returns a 422 / login-failed, automated login probably isn't set up for this account. Fall back in this order:
+
+1. **Active profile** — `ranger-cli go` with no env vars (works if a human ran `profile add` for this app)
+2. **Interactive setup** — ask the user to run `ranger-cli profile add <name>`
+3. **For CI / background-agent flows**: automated login is set up per-app with the Ranger team — point the user at https://docs.ranger.net/main/concepts/profiles#automated-login
+
+If the user did NOT give you credentials, skip the env-var path entirely and go straight to fallback #1 or #2.
+
+## Scenario-driven verification
+
+After implementing code against a scenario in an active feature review, verify it:
 
 ```bash
 ranger-cli go --scenario <N> --notes "<what to verify>"
 ```
 
-The URL is derived from your active profile's `baseUrl` setting.
+## Profile resolution order
 
-## Required: Active Feature Review
+1. `--profile <name>` flag (or `RANGER_PROFILE` env var)
+2. Saved active profile (`ranger-cli profile use <name>`)
+3. `RANGER_TEST_USERNAME` (reuses or creates a matching profile)
+4. The org's sole profile when exactly one exists
 
-`go` requires an active feature review. If you don't have one:
+## Active feature review (only needed for scenario-driven runs)
+
+If you're verifying a scenario (not a one-shot):
 
 ```bash
 ranger-cli list                # Find feature reviews to resume
 ranger-cli resume <id>         # Resume a specific feature review
 ```
+
+For a one-shot `go --base-url ... --notes '...'`, the CLI handles feature-review creation for you.
 
 ## The Verification Flow
 
@@ -41,7 +80,7 @@ You do NOT need to manually include reviewer feedback in your `--notes` descript
 
 | Option | Required | Description |
 |--------|----------|-------------|
-| `--profile` | No | Profile to use (defaults to active profile) |
+| `--profile` | No | Profile to use. Equivalent to `RANGER_PROFILE` env var. Defaults to active profile, or to the user keyed by `RANGER_TEST_USERNAME` if set. |
 | `--notes` | No | What to verify (defaults to scenario description) |
 | `--scenario` | No | Scenario index to verify (skips selection prompt) |
 | `--start-path` | No | Path to start on (appended to base URL, e.g., `/dashboard`) |
@@ -182,7 +221,7 @@ Always end the conversational turn by sharing the dashboard link whenever you ru
 Run `ranger-cli list` to find feature reviews, then `ranger-cli resume <id>` to resume one.
 
 ### "No active profile"
-Run `ranger-cli profile use <profile-name>` to set a profile with browser access.
+Either set `RANGER_TEST_USERNAME` (and `RANGER_TEST_PASSWORD` for first-time login) and re-run, or pin one explicitly with `ranger-cli profile use <profile-name>`.
 
 ### Verification times out
 The agent has 59 minutes max. For very long flows, break into smaller scenarios.
