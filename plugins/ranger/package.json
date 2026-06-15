@@ -1,6 +1,6 @@
 {
   "name": "@ranger-testing/ranger-plugin",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "Ranger plugin for Claude Code - E2E testing and feature development tools",
   "type": "module",
   "scripts": {
