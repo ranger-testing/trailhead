@@ -265,6 +265,7 @@ If you encounter authentication issues:
 2. **Check existing profiles**: Run `ranger-cli profile ls` to see all configured profiles.
 3. **Pin a specific profile**: Use `ranger-cli profile use <profile-name>` (or pass `--profile <name>` / set `RANGER_PROFILE`).
 4. **Refresh auth**: For server-side relogin (headless, no human needed), set `RANGER_TEST_USERNAME` / `RANGER_TEST_PASSWORD` and re-run `ranger-cli go ...`. For SSO/OAuth profiles, run `ranger-cli profile update <account-email>` to re-capture the session (server-side login when configured, headed browser otherwise).
+5. **Bare-localhost targets**: To run an automated login against a bare-localhost target (`localhost:PORT`, `127.0.0.1:PORT`), pass `--env <key>` (or set `RANGER_AUTH_ENV`). To reuse a session on localhost without automated login, capture one once with `ranger-cli profile add <name> --url <localhost-url>`, then re-run `ranger-cli go` with the same `--base-url`.
 
 
 ### Authentication Issues to Ranger
