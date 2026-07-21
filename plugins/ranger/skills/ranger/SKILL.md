@@ -230,6 +230,14 @@ When completing your work or ending the session, your final message to the user 
 
 ---
 
+# Graduating a feature review into a durable test
+
+Feature reviews are your inner loop: they verify a change against the app you're running locally, for you, right now. They are not permanent tests, and they do not run for the rest of the team.
+
+When a change is shipping and you want it protected going forward — a test that runs continuously across the team against your deployed environment — that's a Ranger **test** (testgen), created through the Ranger MCP, not the CLI. Testgen runs in Ranger's cloud against a deployed, reachable environment, so offer it **once the change is deployed**, not while it's only on localhost. If the testgen tools are available in this session, offer to set that up after the feature review is verified; otherwise point the user to them.
+
+---
+
 # Quick Reference
 
 | Command | Purpose |
