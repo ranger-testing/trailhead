@@ -54,6 +54,7 @@ Ranger verifies scenarios by running them in a real browser. Each scenario must 
 3. **E2E flows only** - Each scenario is a test a QA engineer would run in the browser
 4. **Must be UI-testable** - No backend-only work, no code changes, no infrastructure tasks
 5. **Happy path focus** - Describe the successful user journey, not edge cases
+6. **Lead with a one-line summary** - The first line of a scenario is shown as its title in the review UI. If you include detail steps, put them on separate lines after the summary (markdown is rendered)
 
 The goal is to quickly validate that the core functionality works—not to build a comprehensive test suite.
 
@@ -116,6 +117,15 @@ Good: "User can create a new project, invite a team member, and see them in the 
 **Good - single flow:**
 ```
 1. User can navigate to Reports, click Export, select CSV format, and download the file
+```
+
+**Good - detailed scenario (one-line summary first, steps after):**
+```
+User can export a report as CSV
+
+1. Navigate to the Reports page
+2. Click Export and choose CSV format
+3. Verify the file downloads
 ```
 
 ### When to Use Multiple Scenarios

@@ -1,6 +1,6 @@
 # Starting a Feature Review Session
 
-At the START of any coding session that touches the frontend or UI, check if there's an existing feature review to resume before creating a new one.
+After Ranger is explicitly invoked, check if there's an existing feature review to resume before creating a new one.
 
 ## List Feature Reviews
 

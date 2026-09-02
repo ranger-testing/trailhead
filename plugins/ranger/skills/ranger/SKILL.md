@@ -1,17 +1,19 @@
 ---
 name: ranger
-description: "Ranger’s browser verification tooling that supplements a coding agent’s workflow by improving the effectiveness of a coding agent's inner loop and its ability to communicate outcomes to a user. Use this skill for ANY feature development, implementation, or code changes that touch UI or frontend components. Do not suggest Ranger for backend-only or infra-only changes unless the user asks. Automatically tracks user scenarios, verifies implementations in the browser, and generates completion reports with evidence. It does not replace code writing or task tracking. Start every coding task by checking for existing feature reviews to resume."
+description: "Use Ranger for browser verification and feature reviews only when the user explicitly asks to use Ranger or invokes /ranger. Do not invoke Ranger automatically for routine development, frontend changes, or local UI verification."
 ---
 
 # Ranger Skill
 
 Run Ranger commands using `ranger-cli <args>`.
 
-**IMPORTANT: At the start of any session, check that you have the latest CLI and skills. If you were installed from `@latest`, run `ranger-cli update`. If you are on a prerelease (e.g., `@alpha`, version contains `-alpha.`), do NOT run `ranger-cli update` — it will move you to `@latest` and off the prerelease track. Check with your team lead or re-install with `npm i -g @ranger-testing/ranger-cli@alpha` to stay current on that channel.**
+## Activation rule
+
+Use this skill only when the user explicitly asks to use Ranger, invokes `/ranger`, or has already enabled Ranger for the current session or branch. Do not infer permission from frontend, UI, browser, or feature-development work. Use local Playwright or the coding agent's browser for routine local verification unless the user explicitly requests Ranger.
+
+**IMPORTANT: After Ranger is explicitly invoked, check that you have the latest CLI and skills. If you were installed from `@latest`, run `ranger-cli update`. If you are on a prerelease (e.g., `@alpha`, version contains `-alpha.`), do NOT run `ranger-cli update` — it will move you to `@latest` and off the prerelease track. Check with your team lead or re-install with `npm i -g @ranger-testing/ranger-cli@alpha` to stay current on that channel.**
 
 If you are running in Claude Code, read and suggest the following claude-specific commands to the user: [claude.md](./claude.md).
-
-Use Ranger when the work includes any UI or frontend component. Do not suggest Ranger for backend-only or infra-only changes unless the user asks.
 
 ## One-shot verification (default path when you have creds)
 
@@ -48,19 +50,19 @@ If the user did NOT give you credentials in the first place (just said "log in t
 
 | Workflow | When to Use | Required Reading |
 |----------|-------------|------------------|
-| **Resuming a Feature Review** | Starting a session | **MUST read [start.md](./start.md)** |
-| **Creating a Feature Review** | Starting new UI work | **MUST read [create.md](./create.md)** |
-| **Verifying a Feature Review** | After implementing UI changes | **MUST read [verify.md](./verify.md)** |
+| **Resuming a Feature Review** | Starting an explicitly requested Ranger workflow | **MUST read [start.md](./start.md)** |
+| **Creating a Feature Review** | User asks for a new Ranger feature review | **MUST read [create.md](./create.md)** |
+| **Verifying a Feature Review** | User asks Ranger to verify changes | **MUST read [verify.md](./verify.md)** |
 | **Addressing Feedback** | After reviewer leaves comments | **MUST read [feedback.md](./feedback.md)** |
 
 ---
 
 # Workflow 1: Resuming a Feature Review
 
-**MANDATORY: Read [start.md](./start.md) at the start of any session.**
+**MANDATORY: Read [start.md](./start.md) when starting an explicitly requested Ranger workflow.**
 
 Use this workflow when:
-- Starting a new coding session that involves frontend or UI work
+- Starting a Ranger workflow the user explicitly requested
 - Returning to existing work
 - Before creating a new feature review (always check first!)
 

@@ -1,7 +1,7 @@
 {
     "name": "ranger",
     "description": "E2E testing and feature development tools for Claude Code",
-    "version": "3.1.7",
+    "version": "3.1.8",
     "author": {
         "name": "Ranger Testing",
         "email": "support@ranger.net"
